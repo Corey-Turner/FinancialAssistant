@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MortgageCalc from "./components/MortgageCalc";
+import Nav from "./components/Nav";
+import DebtManager from "./components/DebtManager";
+import BudgetManager from "./components/BudgetManager";
+import TaxEstimator from "./components/TaxEstimator";
+import Home from "./components/Home";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app">
+        <Nav />
+        <Switch>
+          <Route path="/mortgage-calculator" component={MortgageCalc} />
+          <Route path="/tax-estimator" component={TaxEstimator} />
+          <Route path="/debt-manager" component={DebtManager} />
+          <Route path="/budget-manager" component={BudgetManager} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
