@@ -19,8 +19,6 @@ const updateTotalDurationMiddleware = () =>{
     return updateTotalDuration
 }
 
-
-
 export const mortgageMiddleware = 
 {
     updateStartingAmount: updateStartingAmountMiddleware,

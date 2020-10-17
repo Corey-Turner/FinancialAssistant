@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
-import mortgageCalcReducer from "../Reducers/MortgageCalculatorReducer";
+import { mortgageActions } from "../Actions/actions";
 
 class BasicOutputWidget extends Component {
+  constructor(props){
+    super(props)
+
+    this.props.updateMonthlyPayments()
+    this.props.updateTotalPayment()
+    this.props.updateTotalInterest()
+  }
   state = {};
+
   render() {
     return (
       <div className="BasicOutputWidget">
@@ -14,7 +22,7 @@ class BasicOutputWidget extends Component {
             type="number"
             name="total-cost"
             className="mortgage-amount-output"
-            value={this.props.mortgageInfo.totalAmount}
+            value={this.props.mortgageInfo.totalPayment}
             readOnly
           />
         </span>
@@ -25,6 +33,7 @@ class BasicOutputWidget extends Component {
             type="number"
             name="monthly-payment"
             className="mortgage-amount-output"
+            value={this.props.mortgageInfo.monthlyPayment}
             readOnly
           />
         </span>
@@ -35,6 +44,7 @@ class BasicOutputWidget extends Component {
             type="number"
             name="interest-paid"
             className="mortgage-amount-output"
+            value={this.props.mortgageInfo.totalInterest}
             readOnly
           />
         </span>
@@ -48,6 +58,12 @@ const mapStateToProps = (state) =>{
     mortgageInfo: state.mortgageCalcReducer
   }
 }
-
-export default connect(mapStateToProps)(BasicOutputWidget);
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    updateMonthlyPayments: () => {dispatch(mortgageActions.updateMonthlyPayments())},
+    updateTotalPayment: () => {dispatch(mortgageActions.updateTotalPayment())},
+    updateTotalInterest: () => {dispatch(mortgageActions.updateTotalInterest())}
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(BasicOutputWidget);
 

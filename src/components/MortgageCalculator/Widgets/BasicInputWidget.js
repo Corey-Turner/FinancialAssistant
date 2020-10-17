@@ -1,17 +1,39 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-//import mortgageCalcReducer from './../Reducers/MortgageCalculatorReducer'
 import { mortgageActions } from "../Actions/actions";
 
 class BasicInputWidget extends Component {
-  StartingAmountOnChange = (event) =>{
-    this.props.updateStartingAmount(event.target.value)
+  
+  StartingAmountOnChange = (event) => {
+    this.props.updateStartingAmount(parseFloat(event.target.value))
+    this.props.updateMonthlyPayments()
+    this.props.updateTotalPayment()
+    this.props.updateTotalInterest()
   }
-  InterestRateOnChange = (event) =>{
-    this.props.updateInterestRate(event.target.value)
+
+  InterestRateOnChange = (event) => {
+    if(event.target.value < 100 && event.target.value > 0)
+    {
+      this.props.updateInterestRate(parseFloat(event.target.value))
+    }
+    else if(event.target.value <= 0)
+    {
+      this.props.updateInterestRate(0)
+    }
+    else
+    {
+      this.props.updateInterestRate(100)
+    }
+    this.props.updateMonthlyPayments()
+    this.props.updateTotalPayment()
+    this.props.updateTotalInterest()
   }
   TotalDurationOnChange = (event) =>{
-    this.props.updateTotalDuration(event.target.value)
+    console.log(this.props.mortgageInfo)
+    this.props.updateTotalDuration(parseFloat(event.target.value))
+    this.props.updateMonthlyPayments()
+    this.props.updateTotalPayment()
+    this.props.updateTotalInterest()
   }
 
   render() {
@@ -26,7 +48,7 @@ class BasicInputWidget extends Component {
             className="mortgage-amount-input"
             step="10000"
             min="0"
-            value={this.props.mortgageInfo.totalAmount}
+            value={this.props.mortgageInfo.initialAmount}
             onChange={this.StartingAmountOnChange}
           />
         </span>
@@ -38,7 +60,7 @@ class BasicInputWidget extends Component {
             step="1"
             max="100"
             min="0"
-            value={this.props.mortgageInfo.interestRate * 100}
+            value={this.props.mortgageInfo.interestRate}
             onChange={this.InterestRateOnChange}
           />
         </span>
@@ -67,7 +89,10 @@ const mapDispatchToProps = (dispatch) =>{
   return{
     updateStartingAmount: (value) => {dispatch(mortgageActions.updateStartingAmount(value))},
     updateInterestRate: (value) => {dispatch(mortgageActions.updateInterestRate(value))},
-    updateTotalDuration: (value) => {dispatch(mortgageActions.updateTotalDuration(value))}
+    updateTotalDuration: (value) => {dispatch(mortgageActions.updateTotalDuration(value))},
+    updateMonthlyPayments: () => {dispatch(mortgageActions.updateMonthlyPayments())},
+    updateTotalPayment: () => {dispatch(mortgageActions.updateTotalPayment())},
+    updateTotalInterest: () => {dispatch(mortgageActions.updateTotalInterest())}
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BasicInputWidget);

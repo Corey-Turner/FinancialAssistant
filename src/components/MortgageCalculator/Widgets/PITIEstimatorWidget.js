@@ -1,31 +1,40 @@
 import React, { Component } from "react";
 import { Doughnut } from "react-chartjs-2";
+import { connect } from "react-redux";
+import { mortgageActions } from "../Actions/actions";
 
 class PITIEstimatorWidget extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+    
     this.state = {
+      monthlyHOA: 0,
       data: {
-        labels: ["Principle", "Interest", "Taxes", "Insurance", "HOA"],
-        datasets: [
-          {
-            backgroundColor: [
-              "#003f5c",
-              "#58508d",
-              "#bc5090",
-              "#ff6361",
-              "#ffa600",
-            ],
-            borderWidth: 1,
-            data: [800, 200, 100, 70, 120],
-          },
-        ],
+        labels: ["Principle & Interest", "Taxes", "Insurance", "HOA"],
       },
     };
   }
-
+  monthlyHOAOnChange = (event) =>{
+    this.props.updateMonthlyHOA(parseFloat(event.target.value))
+  }
   getChartData = (canvas) => {
-    const data = this.state.data;
+    const data = this.state.data
+    data.datasets = [
+      {
+        backgroundColor: [
+          "#003f5c",
+          "#bc5090",
+          "#ff6361",
+          "#ffa600",
+        ],
+        borderWidth: 1,
+        data: [
+          this.props.mortgageInfo.monthlyPayment, 
+          100, 
+          70, 
+          this.props.mortgageInfo.monthlyHOA],
+      },
+    ]
     return data;
   };
 
@@ -93,7 +102,7 @@ class PITIEstimatorWidget extends Component {
 
           <label htmlFor="monthly-hoa">Monthly HOA</label>
           <span className="piti-input">
-            <input type="number" name="monthly-hoa" step="100" min="0" />
+            <input type="number" name="monthly-hoa" step="100" min="0" value={this.props.mortgageInfo.monthlyHOA} onChange={this.monthlyHOAOnChange}/>
           </span>
         </div>
         <div className="chart-div">
@@ -129,4 +138,15 @@ class PITIEstimatorWidget extends Component {
     );
   }
 }
-export default PITIEstimatorWidget;
+
+const mapStateToProps = (state) =>{
+  return{
+    mortgageInfo: state.mortgageCalcReducer
+  }
+}
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    updateMonthlyHOA: (value) => {dispatch(mortgageActions.updateMonthlyHOA(value))},
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(PITIEstimatorWidget);

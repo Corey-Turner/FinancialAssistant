@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import store from './appStateManager/store'
-import {updateStartingAmount} from './components/MortgageCalculator/Actions/actions'
 import { Provider } from "react-redux";
 
 ReactDOM.render(
