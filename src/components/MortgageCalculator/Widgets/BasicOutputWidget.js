@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux'
+import mortgageCalcReducer from "../Reducers/MortgageCalculatorReducer";
 
 class BasicOutputWidget extends Component {
   state = {};
@@ -12,6 +14,7 @@ class BasicOutputWidget extends Component {
             type="number"
             name="total-cost"
             className="mortgage-amount-output"
+            value={this.props.mortgageInfo.totalAmount}
             readOnly
           />
         </span>
@@ -40,4 +43,11 @@ class BasicOutputWidget extends Component {
   }
 }
 
-export default BasicOutputWidget;
+const mapStateToProps = (state) =>{
+  return{
+    mortgageInfo: state.mortgageCalcReducer
+  }
+}
+
+export default connect(mapStateToProps)(BasicOutputWidget);
+

@@ -1,14 +1,15 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import MortgageCalc from "./components/MortgageCalc";
-import Nav from "./components/Nav";
-import DebtManager from "./components/DebtManager";
-import BudgetManager from "./components/BudgetManager";
-import TaxEstimator from "./components/TaxEstimator";
-import Home from "./components/Home";
 
-function App() {
+import MortgageCalc from "./components/MortgageCalculator/MortgageCalc";
+import Nav from "./components/Nav";
+import DebtManager from "./components/DebtManager/DebtManager";
+import BudgetManager from "./components/BudgetManager/BudgetManager";
+import TaxEstimator from "./components/TaxEstimator/TaxEstimator";
+import Home from "./components/Home/Home";
+
+export default function App() {
   return (
     <Router>
       <div className="app">
@@ -25,4 +26,3 @@ function App() {
   );
 }
 
-export default App;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import BasicInputWidget from "./MortgageCalcWidgets/BasicInputWidget";
-import BasicOutputWidget from "./MortgageCalcWidgets/BasicOutputWidget";
-import PITIEstimatorWidget from "./MortgageCalcWidgets/PITIEstimatorWidget";
+import BasicInputWidget from "./Widgets/BasicInputWidget";
+import BasicOutputWidget from "./Widgets/BasicOutputWidget";
+import PITIEstimatorWidget from "./Widgets/PITIEstimatorWidget";
 
 class MortgageCalc extends Component {
   state = {
