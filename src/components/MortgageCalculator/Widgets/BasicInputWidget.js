@@ -5,7 +5,7 @@ import { mortgageActions } from "../Actions/actions";
 class BasicInputWidget extends Component {
   
   StartingAmountOnChange = (event) => {
-    this.props.updateStartingAmount(parseFloat(event.target.value))
+    this.props.updatePropertyValue(parseFloat(event.target.value))
     this.props.updateMonthlyPayments()
     this.props.updateTotalPayment()
     this.props.updateTotalInterest()
@@ -48,7 +48,7 @@ class BasicInputWidget extends Component {
             className="mortgage-amount-input"
             step="10000"
             min="0"
-            value={this.props.mortgageInfo.initialAmount}
+            value={this.props.mortgageInfo.propertyValue}
             onChange={this.StartingAmountOnChange}
           />
         </span>
@@ -87,7 +87,7 @@ const mapStateToProps = (state) =>{
 }
 const mapDispatchToProps = (dispatch) =>{
   return{
-    updateStartingAmount: (value) => {dispatch(mortgageActions.updateStartingAmount(value))},
+    updatePropertyValue: (value) => {dispatch(mortgageActions.updatePropertyValue(value))},
     updateInterestRate: (value) => {dispatch(mortgageActions.updateInterestRate(value))},
     updateTotalDuration: (value) => {dispatch(mortgageActions.updateTotalDuration(value))},
     updateMonthlyPayments: () => {dispatch(mortgageActions.updateMonthlyPayments())},

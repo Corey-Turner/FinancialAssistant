@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { Doughnut } from "react-chartjs-2";
+import { Doughnut, Chart } from "react-chartjs-2";
 import { connect } from "react-redux";
 import { mortgageActions } from "../Actions/actions";
 
 class PITIEstimatorWidget extends Component {
   constructor(props) {
     super(props)
-    
     this.state = {
       monthlyHOA: 0,
       data: {
@@ -14,8 +13,27 @@ class PITIEstimatorWidget extends Component {
       },
     };
   }
+
   monthlyHOAOnChange = (event) =>{
     this.props.updateMonthlyHOA(parseFloat(event.target.value))
+  }
+
+  propertyTaxRateOnChange = (event) => {
+    this.props.updatePropertyTaxRate(parseFloat(event.target.value))
+  }
+
+  insuranceCostOnChange = (event) => {
+    this.props.updateAnnualInsuranceCost(parseFloat(event.target.value))
+  }
+  getMonthlyExpenses = () => {
+    let value = 0;
+    value = parseFloat(this.props.mortgageInfo.monthlyPayment) + 
+    parseFloat(((this.props.mortgageInfo.propertyTaxRate/100) * this.props.mortgageInfo.propertyValue)/12 ) + 
+    parseFloat(this.props.mortgageInfo.annualInsuranceCost/12 ) + 
+    parseFloat(this.props.mortgageInfo.monthlyHOA)
+
+    console.log(value)
+    return value
   }
   getChartData = (canvas) => {
     const data = this.state.data
@@ -30,8 +48,8 @@ class PITIEstimatorWidget extends Component {
         borderWidth: 1,
         data: [
           this.props.mortgageInfo.monthlyPayment, 
-          100, 
-          70, 
+          ((this.props.mortgageInfo.propertyTaxRate/100) * this.props.mortgageInfo.propertyValue)/12, 
+          this.props.mortgageInfo.annualInsuranceCost/12, 
           this.props.mortgageInfo.monthlyHOA],
       },
     ]
@@ -42,68 +60,47 @@ class PITIEstimatorWidget extends Component {
     return (
       <div className="PITIEstimatorWidget">
         <div className="InformationDiv">
-          <label htmlFor="location">Location</label>
-          <span className="piti-input">
-            <select name="location">
-              <option value=""> &lt;Select a State&gt; </option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
-              <option value="AR">Arkansas</option>
-              <option value="CA">California</option>
-              <option value="CO">Colorado</option>
-              <option value="CT">Connecticut</option>
-              <option value="DE">Delaware</option>
-              <option value="DC">District Of Columbia</option>
-              <option value="FL">Florida</option>
-              <option value="GA">Georgia</option>
-              <option value="HI">Hawaii</option>
-              <option value="ID">Idaho</option>
-              <option value="IL">Illinois</option>
-              <option value="IN">Indiana</option>
-              <option value="IA">Iowa</option>
-              <option value="KS">Kansas</option>
-              <option value="KY">Kentucky</option>
-              <option value="LA">Louisiana</option>
-              <option value="ME">Maine</option>
-              <option value="MD">Maryland</option>
-              <option value="MA">Massachusetts</option>
-              <option value="MI">Michigan</option>
-              <option value="MN">Minnesota</option>
-              <option value="MS">Mississippi</option>
-              <option value="MO">Missouri</option>
-              <option value="MT">Montana</option>
-              <option value="NE">Nebraska</option>
-              <option value="NV">Nevada</option>
-              <option value="NH">New Hampshire</option>
-              <option value="NJ">New Jersey</option>
-              <option value="NM">New Mexico</option>
-              <option value="NY">New York</option>
-              <option value="NC">North Carolina</option>
-              <option value="ND">North Dakota</option>
-              <option value="OH">Ohio</option>
-              <option value="OK">Oklahoma</option>
-              <option value="OR">Oregon</option>
-              <option value="PA">Pennsylvania</option>
-              <option value="RI">Rhode Island</option>
-              <option value="SC">South Carolina</option>
-              <option value="SD">South Dakota</option>
-              <option value="TN">Tennessee</option>
-              <option value="TX">Texas</option>
-              <option value="UT">Utah</option>
-              <option value="VT">Vermont</option>
-              <option value="VA">Virginia</option>
-              <option value="WA">Washington</option>
-              <option value="WV">West Virginia</option>
-              <option value="WI">Wisconsin</option>
-              <option value="WY">Wyoming</option>
-            </select>
-          </span>
-
-          <label htmlFor="monthly-hoa">Monthly HOA</label>
-          <span className="piti-input">
-            <input type="number" name="monthly-hoa" step="100" min="0" value={this.props.mortgageInfo.monthlyHOA} onChange={this.monthlyHOAOnChange}/>
-          </span>
+        <label htmlFor="tax-rate">Property Tax Rate (%)</label>
+        <span className="piti-input">
+          <input
+            type="number"
+            name="tax-rate"
+            step="1"
+            max="100"
+            min="0"
+            value={this.props.mortgageInfo.propertyTaxRate}
+            onChange={this.propertyTaxRateOnChange}
+          />
+        </span>
+        <label htmlFor="home-insurance">Annual Home Insurance</label>
+        <span className="piti-input">
+          $
+          <input
+            type="number"
+            name="home-insurance"
+            className="piti-amount-input"
+            step="1"
+            max="100"
+            min="0"
+            value={this.props.mortgageInfo.annualInsuranceCost}
+            onChange={this.insuranceCostOnChange}
+          />
+        </span>
+        <label htmlFor="monthly-hoa">Monthly HOA</label>
+        <span className="piti-input">
+          $
+          <input type="number" name="monthly-hoa" className="piti-amount-input" step="100" min="0" value={this.props.mortgageInfo.monthlyHOA} onChange={this.monthlyHOAOnChange}/>
+        </span>
+        <label htmlFor="monthly-expenses">Monthly Housing Expenses</label>
+        <span className="piti-output">
+          $
+          <input 
+          type="number" 
+          name="monthly-hoa" 
+          className="piti-amount-output" 
+          value={this.getMonthlyExpenses().toFixed(2)} 
+          readOnly/>
+        </span>
         </div>
         <div className="chart-div">
           <Doughnut
@@ -147,6 +144,8 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
   return{
     updateMonthlyHOA: (value) => {dispatch(mortgageActions.updateMonthlyHOA(value))},
+    updatePropertyTaxRate: (value) => {dispatch(mortgageActions.updatePropertyTaxRate(value))},
+    updateAnnualInsuranceCost: (value) => {dispatch(mortgageActions.updateAnnualInsuranceCost(value))},
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(PITIEstimatorWidget);

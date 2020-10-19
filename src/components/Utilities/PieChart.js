@@ -2,38 +2,43 @@ import React, { Component } from "react";
 import { Doughnut } from "react-chartjs-2";
 
 class PieChart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: {
-        labels: ["Principle", "Interest", "Taxes", "Insurance"],
-        datasets: [
-          {
-            backgroundColor: ["#003f5c", "#58508d", "#bc5090", "#ff6361"],
-            borderWidth: 1,
-            data: [1, 2, 3, 4],
-          },
-        ],
-      },
-    };
+  constructor(){
+    var promisedDeliveryChart = new Chart(document.getElementById('Chart'), {
+      type: 'pie',
+      data: data,
+      options: {
+        responsive: true,
+        legend: {
+          display: false
+        }
+      }
+    });
+    
+    Chart.pluginService.register({
+      beforeDraw: function(chart) {
+        var width = chart.chart.width,
+            height = chart.chart.height,
+            ctx = chart.chart.ctx;
+    
+        ctx.restore();
+        var fontSize = (height / 114).toFixed(2);
+        ctx.font = fontSize + "em sans-serif";
+        ctx.textBaseline = "middle";
+    
+        var text = "75%",
+            textX = Math.round((width - ctx.measureText(text).width) / 2),
+            textY = height / 2;
+    
+        ctx.fillText(text, textX, textY);
+        ctx.save();
+      }
+    });
   }
-
-  getChartData = (canvas) => {
-    const data = this.state.data;
-    return data;
-  };
 
   render() {
     return (
       <div className="PieChart">
-        <Doughnut
-          className="Chart"
-          options={{
-            responsive: true,
-          }}
-          data={this.getChartData}
-          width={"100%"}
-        />
+        <canvas id="myChart"></canvas>
       </div>
     );
   }

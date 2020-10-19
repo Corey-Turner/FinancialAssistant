@@ -152,15 +152,6 @@
   background-color: #eee;
   margin: 0 0 10px;
 }
-.MortgageCalc .PITIEstimatorWidget .InformationDiv .piti-input select {
-  height: 10px;
-  background-color: #eee;
-  border: 0;
-  float: right;
-  width: calc(98%);
-  outline: none;
-  font-size: 8px;
-}
 .MortgageCalc .PITIEstimatorWidget .InformationDiv .piti-input input {
   height: 10px;
   background-color: #eee;
@@ -169,15 +160,26 @@
   width: calc(97%);
   outline: none;
 }
-.MortgageCalc .PITIEstimatorWidget .InformationDiv .piti-input select option {
-  font-size: 7px;
+.MortgageCalc .PITIEstimatorWidget .InformationDiv .piti-input .piti-amount-input{
+  width: calc(99% - 10px);
 }
-.MortgageCalc .PITIEstimatorWidget .InformationDiv .piti-outputs {
-  width: 130px;
-  height: 30px;
-  display: grid;
-  grid-template-columns: 60px 60px;
-  grid-column-gap: 10px;
+.MortgageCalc .PITIEstimatorWidget .InformationDiv .piti-output {
+  height: 12px;
+  border: 1px solid #ccc;
+  color: #111;
+  background-color: #ccc;
+  margin: 0 0 10px;
+}
+.MortgageCalc .PITIEstimatorWidget .InformationDiv .piti-output input {
+  height: 10px;
+  background-color: #ccc;
+  border: 0;
+  float: right;
+  width: calc(97%);
+  outline: none;
+}
+.MortgageCalc .PITIEstimatorWidget .InformationDiv .piti-output .piti-amount-output{
+  width: calc(99% - 10px);
 }
 .MortgageCalc .PITIEstimatorWidget .chart-div {
   position: relative;
