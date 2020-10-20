@@ -18,7 +18,7 @@ export default function App() {
           <Route path="/mortgage-calculator" component={MortgageCalc} />
           <Route path="/tax-estimator" component={TaxEstimator} />
           <Route path="/debt-manager" component={DebtManager} />
-          <Route path="/budget-manager" component={BudgetManager} />
+          <Route path="/budget-manager" component={MortgageCalc} />
           <Route path="/" component={Home} />
         </Switch>
       </div>
