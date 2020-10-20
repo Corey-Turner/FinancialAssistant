@@ -1,4 +1,4 @@
-import {MortgageConstants} from './../Actions/actions'
+import {MortgageConstants} from './actions'
 
 const initialState = {
     propertyValue: 200000,

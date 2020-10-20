@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { mortgageActions } from "../Actions/actions";
+import { mortgageActions } from "../../data/actions";
+import './styles.css' //Styling for the Basic Input Widget
 
 class BasicInputWidget extends Component {
   

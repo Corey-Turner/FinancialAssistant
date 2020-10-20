@@ -1,0 +1,36 @@
+
+/************************
+
+  Navigation Bar 
+
+*************************/
+.NavigationBar {
+  margin: 0 0 10px;
+  width: calc(100%-20px);
+}
+.NavigationBar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #111;
+}
+
+.NavigationBar li {
+  float: right;
+}
+
+.NavigationBar li a {
+  display: block;
+  height: 100%;
+  color: white;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  font-size: 0.5em;
+}
+.NavigationBar li a:hover {
+  background-color: #444;
+}

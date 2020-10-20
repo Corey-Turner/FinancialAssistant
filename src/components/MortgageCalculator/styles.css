@@ -1,0 +1,7 @@
+.MortgageCalc {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  font-size: 9px;
+}

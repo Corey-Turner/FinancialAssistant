@@ -2,12 +2,12 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import MortgageCalc from "./components/MortgageCalculator/MortgageCalc";
-import Nav from "./components/Nav";
-import DebtManager from "./components/DebtManager/DebtManager";
-import BudgetManager from "./components/BudgetManager/BudgetManager";
-import TaxEstimator from "./components/TaxEstimator/TaxEstimator";
-import Home from "./components/Home/Home";
+import MortgageCalc from "./components/MortgageCalculator/index";
+import Nav from "./components/Nav/nav";
+import DebtManager from "./components/DebtManager/index";
+import BudgetManager from "./components/BudgetManager/index";
+import TaxEstimator from "./components/TaxEstimator/index";
+import Home from "./components/Home/index";
 
 export default function App() {
   return (

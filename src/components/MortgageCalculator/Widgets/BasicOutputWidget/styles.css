@@ -1,0 +1,29 @@
+.BasicOutputWidget {
+  background-color: #555;
+  color: #eee;
+  border: 1px inset #666;
+  padding: 20px;
+  margin: 5px 5px;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  width: 100px;
+}
+.BasicOutputWidget .basic-output-input {
+  height: 12px;
+  border: 1px solid #ccc;
+  color: #111;
+  background-color: #ccc;
+  margin: 0 0 10px;
+}
+.BasicOutputWidget .basic-output-input input {
+  height: 10px;
+  background-color: #ccc;
+  border: 0;
+  float: right;
+  width: calc(98%);
+  outline: none;
+}
+.BasicOutputWidget .basic-output-input .mortgage-amount-output {
+  width: calc(99% - 10px);
+}
