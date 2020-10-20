@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/Corey-Turner.github.io/FinancialAssistant/static/css/main.7d328c74.chunk.css",
-    "main.js": "/Corey-Turner.github.io/FinancialAssistant/static/js/main.6a56cf12.chunk.js",
-    "main.js.map": "/Corey-Turner.github.io/FinancialAssistant/static/js/main.6a56cf12.chunk.js.map",
-    "runtime-main.js": "/Corey-Turner.github.io/FinancialAssistant/static/js/runtime-main.ad333ddd.js",
-    "runtime-main.js.map": "/Corey-Turner.github.io/FinancialAssistant/static/js/runtime-main.ad333ddd.js.map",
-    "static/js/2.bba9bdcb.chunk.js": "/Corey-Turner.github.io/FinancialAssistant/static/js/2.bba9bdcb.chunk.js",
-    "static/js/2.bba9bdcb.chunk.js.map": "/Corey-Turner.github.io/FinancialAssistant/static/js/2.bba9bdcb.chunk.js.map",
-    "index.html": "/Corey-Turner.github.io/FinancialAssistant/index.html",
-    "precache-manifest.25d670ff9536ba070d0db1a7e9a4c8a2.js": "/Corey-Turner.github.io/FinancialAssistant/precache-manifest.25d670ff9536ba070d0db1a7e9a4c8a2.js",
-    "service-worker.js": "/Corey-Turner.github.io/FinancialAssistant/service-worker.js",
-    "static/css/main.7d328c74.chunk.css.map": "/Corey-Turner.github.io/FinancialAssistant/static/css/main.7d328c74.chunk.css.map",
-    "static/js/2.bba9bdcb.chunk.js.LICENSE.txt": "/Corey-Turner.github.io/FinancialAssistant/static/js/2.bba9bdcb.chunk.js.LICENSE.txt"
+    "main.css": "/FinancialAssistant/static/css/main.7d328c74.chunk.css",
+    "main.js": "/FinancialAssistant/static/js/main.58971850.chunk.js",
+    "main.js.map": "/FinancialAssistant/static/js/main.58971850.chunk.js.map",
+    "runtime-main.js": "/FinancialAssistant/static/js/runtime-main.3dfe4def.js",
+    "runtime-main.js.map": "/FinancialAssistant/static/js/runtime-main.3dfe4def.js.map",
+    "static/js/2.39b68591.chunk.js": "/FinancialAssistant/static/js/2.39b68591.chunk.js",
+    "static/js/2.39b68591.chunk.js.map": "/FinancialAssistant/static/js/2.39b68591.chunk.js.map",
+    "index.html": "/FinancialAssistant/index.html",
+    "precache-manifest.44bed7615c81c8011074d2cd2875e9a5.js": "/FinancialAssistant/precache-manifest.44bed7615c81c8011074d2cd2875e9a5.js",
+    "service-worker.js": "/FinancialAssistant/service-worker.js",
+    "static/css/main.7d328c74.chunk.css.map": "/FinancialAssistant/static/css/main.7d328c74.chunk.css.map",
+    "static/js/2.39b68591.chunk.js.LICENSE.txt": "/FinancialAssistant/static/js/2.39b68591.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.ad333ddd.js",
-    "static/js/2.bba9bdcb.chunk.js",
+    "static/js/runtime-main.3dfe4def.js",
+    "static/js/2.39b68591.chunk.js",
     "static/css/main.7d328c74.chunk.css",
-    "static/js/main.6a56cf12.chunk.js"
+    "static/js/main.58971850.chunk.js"
   ]
 }
