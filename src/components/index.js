@@ -1,11 +1,3 @@
 //Dummy component
-
-
-class DebtManager extends Component {
-  state = {};
-  render() {
-    return <div>Dummy Component</div>;
-  }
-}
-
-export default DebtManager;
+//For some reason GitHub Pages will not load 
+//without a file named index.js within the components directory
