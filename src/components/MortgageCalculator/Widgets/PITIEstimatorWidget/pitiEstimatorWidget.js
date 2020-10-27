@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Doughnut, Chart } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import { connect } from "react-redux";
 import { mortgageActions } from "../../data/actions";
 import './styles.css' //Styling for the PITI Estimator Widget

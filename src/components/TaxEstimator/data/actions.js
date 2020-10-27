@@ -1,25 +1,4 @@
 
-export const FEDERAL_TAX_INFORMATION = {
-    Rate: [10,12,22,24,32,35,37],
-    filingStatus: {
-        Single: {
-        "Bracket" : [0, 9876 , 40126 , 85526, 163301, 207351, 518401],
-        "Witholding" : 12200
-        },
-        HeadOfHousehold:{
-            "Bracket" : [0, 14101  , 53701  , 85501 , 163301, 207351, 518401],
-            "Witholding" : 18350
-        },
-        MarriedFilingJoint:{
-            "Bracket" : [0, 19751 , 80251  , 171051, 326601, 414701 , 622051],
-            "Witholding" : 24400
-        },
-        MarriedFilingSingle: {
-            "Bracket" : [0, 9876 , 40126 , 85526, 163301, 207351, 311026 ],
-            "Witholding" : 12200
-        }
-    }
-}
 export const FEDERAL_TAX_FILING_STATUSES = {
     Single: 'Single',
     HeadOfHousehold: 'HeadOfHousehold',
@@ -27,17 +6,54 @@ export const FEDERAL_TAX_FILING_STATUSES = {
     MarriedFilingSingle: 'MarriedFilingSingle',
 }
 
+export const FEDERAL_TAX_INFORMATION = {
+    Rate: [10,12,22,24,32,35,37],
+    filingStatus: {
+        Single: {
+        "Status": FEDERAL_TAX_FILING_STATUSES.Single,
+        "Bracket" : [9875 , 40125 , 85525, 163300, 207350, 518400],
+        "Witholding" : 12200
+        },
+        HeadOfHousehold:{
+            "Status": FEDERAL_TAX_FILING_STATUSES.HeadOfHousehold,
+            "Bracket" : [14100  , 53700  , 85500 , 163300, 207350, 518400],
+            "Witholding" : 18350
+        },
+        MarriedFilingJoint:{
+            "Status": FEDERAL_TAX_FILING_STATUSES.MarriedFilingJoint,
+            "Bracket" : [19750 , 80250  , 171050, 326600, 414700 , 622050],
+            "Witholding" : 24400
+        },
+        MarriedFilingSingle: {
+            "Status": FEDERAL_TAX_FILING_STATUSES.MarriedFilingSingle,
+            "Bracket" : [9875 , 40125 , 85525, 163300, 207350, 311025 ],
+            "Witholding" : 12200
+        }
+    }
+}
+
+
 export const TaxConstants = {
-    UPDATE_ANNUAL_SALARY_VALUE: 'TAXES_UPDATE_ANNUAL_SALARY_VALUE',
+    UPDATE_PRIMARY_SALARY: 'TAXES_UPDATE_PRIMARY_SALARY_VALUE',
+    UPDATE_SECONDARY_SALARY: 'TAXES_UPDATE_SECONDARY_SALARY_VALUE',
     UPDATE_FILING_STATUS: 'TAXES_UPDATE_FILING_STATUS',
     UPDATE_TAXES_OWED: 'TAXES_UPDATE_TAXES_OWED'
 }
 
-function updateAnnualSalary(value){
+function updatePrimarySalary(value){
     return{
-        type: TaxConstants.UPDATE_ANNUAL_SALARY_VALUE,
+        type: TaxConstants.UPDATE_PRIMARY_SALARY,
         payload: {
-            annualSalaryValue: value
+            primarySalaryValue: value
+        }
+    }
+}
+
+function updateSecondarySalary(value){
+    return{
+        type: TaxConstants.UPDATE_SECONDARY_SALARY,
+        payload: {
+            secondarySalaryValue: value
         }
     }
 }
@@ -58,7 +74,8 @@ function updateTaxesOwed(){
 
 export const taxActions = 
 {
-    updateAnnualSalary: updateAnnualSalary,
+    updatePrimarySalary: updatePrimarySalary,
+    updateSecondarySalary: updateSecondarySalary,
     updateFilingStatus: updateFilingStatus,
     updateTaxesOwed: updateTaxesOwed,
 

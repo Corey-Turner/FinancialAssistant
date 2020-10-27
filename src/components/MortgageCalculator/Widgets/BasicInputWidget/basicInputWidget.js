@@ -30,7 +30,6 @@ class BasicInputWidget extends Component {
     this.props.updateTotalInterest()
   }
   TotalDurationOnChange = (event) =>{
-    console.log(this.props.mortgageInfo)
     this.props.updateTotalDuration(parseFloat(event.target.value))
     this.props.updateMonthlyPayments()
     this.props.updateTotalPayment()
