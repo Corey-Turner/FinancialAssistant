@@ -5,3 +5,68 @@
   align-items: stretch;
   font-size: 9px;
 }
+
+.currency-output-format {
+  height: 20px;
+  font-size: 14px;
+  border: 1px solid #bbb;
+  color: #111;
+  background-color: #bbb;
+  margin: 0 0 10px;
+}
+
+.currency-output-format input,
+select {
+  height: 16px;
+  font-size: 16px;
+  background-color: #bbb;
+  border: 0;
+  float: right;
+  width: calc(97%);
+  outline: none;
+  margin: 2px;
+}
+
+.currency-output-format .currency-amount {
+  width: calc(99% - 15px);
+}
+
+.currency-input-format {
+  height: 20px;
+  font-size: 14px;
+  border: 1px solid #eee;
+  color: #111;
+  background-color: #eee;
+  margin: 0 0 10px;
+}
+
+.currency-input-format input {
+  height: 16px;
+  font-size: 16px;
+  background-color: #eee;
+  border: 0;
+  float: right;
+  width: calc(97%);
+  outline: none;
+  margin: 2px;
+}
+
+.currency-input-format .currency-amount {
+  width: calc(99% - 15px);
+}
+
+.input-format select {
+  height: 19px;
+  font-size: 16px;
+  background-color: #eee;
+  border: 0;
+  float: right;
+  width: calc(100%);
+  outline: none;
+  margin: 2px;
+}
+
+h2 {
+  font-size: 24px;
+  text-align: center;
+}

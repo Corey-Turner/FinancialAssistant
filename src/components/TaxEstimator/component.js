@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import './styles.css' //Styling for the taxEstimator Component
-import PersonalInfoInputWidget from "./widgets/personalInfoInputWidget/personalInfoInputWidget";
+import IndividualInfoPanelWidget from "./widgets/IndividualInfoPanelWidget/individualInfoPanelWidget";
+import TotalTaxInfoWidget from "./widgets/totalTaxInfoWidget/totalTaxInfoWidget";
 
 class TaxEstimator extends Component {
   state = {};
   render() {
     return (
       <div className="TaxEstimator">
-        <PersonalInfoInputWidget/>
+        <IndividualInfoPanelWidget index='0'/>
+        <IndividualInfoPanelWidget index='1'/>
+        <TotalTaxInfoWidget/>
       </div>
     );
   }

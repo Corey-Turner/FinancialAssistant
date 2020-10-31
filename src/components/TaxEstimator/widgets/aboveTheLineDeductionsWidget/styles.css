@@ -1,0 +1,13 @@
+.AboveTheLineDeductionWidget {
+  background-color: #555;
+  color: #eee;
+  border: 1px inset #666;
+  padding: 5px 20px 20px;
+  margin: 5px 5px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  width: 300px;
+  font-size: 15px;
+}

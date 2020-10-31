@@ -34,35 +34,60 @@ export const FEDERAL_TAX_INFORMATION = {
 
 
 export const TaxConstants = {
-    UPDATE_PRIMARY_SALARY: 'TAXES_UPDATE_PRIMARY_SALARY_VALUE',
+    UPDATE_SALARIES: 'TAXES_UPDATE_SALARY_VALUE',
+    UPDATE_ADDITIONAL_INCOME: 'TAXES_UPDATE_ADDITIONAL_INCOME_VALUE',
+    UPDATE_IRA_CONTRIBUTIONS: 'TAXES_UPDATE_IRA_CONTRIBUTION_VALUE',
+    UPDATE_DEDUCTIONS: 'TAXES_UPDATE_DEDUCTIONS_VALUE',
     UPDATE_SECONDARY_SALARY: 'TAXES_UPDATE_SECONDARY_SALARY_VALUE',
     UPDATE_FILING_STATUS: 'TAXES_UPDATE_FILING_STATUS',
     UPDATE_TAXES_OWED: 'TAXES_UPDATE_TAXES_OWED'
 }
+export const taxDeductionTypes = {
+    RETIREMENT: "retirement",
+    STUDENT_LOAN: "studentLoan",
+    MOVING_EXPENSE: "movingExpense",
+    EDUCATOR_EXPENSE: "educatorExpense",
+    HSA: "hsa",
+    OTHER: "other"
+}
 
-function updatePrimarySalary(value){
+function updateSalary(index, value){
     return{
-        type: TaxConstants.UPDATE_PRIMARY_SALARY,
+        type: TaxConstants.UPDATE_SALARIES,
         payload: {
-            primarySalaryValue: value
+            value: value,            
+            index: index,
         }
     }
 }
 
-function updateSecondarySalary(value){
+function updateAdditionalIncome(index, value){
     return{
-        type: TaxConstants.UPDATE_SECONDARY_SALARY,
+        type: TaxConstants.UPDATE_ADDITIONAL_INCOME,
         payload: {
-            secondarySalaryValue: value
+            value: value,            
+            index: index
         }
     }
 }
 
-function updateFilingStatus(value){
+function updateDeductions(index, value, type){
+    return{
+        type: TaxConstants.UPDATE_DEDUCTIONS,
+        payload: {
+            value: value,            
+            index: index,
+            deductionType: type
+        }
+    }
+}
+
+function updateFilingStatus(value, index){
     return{
         type: TaxConstants.UPDATE_FILING_STATUS,
         payload: {
-            filingStatus: FEDERAL_TAX_INFORMATION.filingStatus[value]
+            value: FEDERAL_TAX_INFORMATION.filingStatus[value],
+            index: index
         }
     }
 }
@@ -74,9 +99,9 @@ function updateTaxesOwed(){
 
 export const taxActions = 
 {
-    updatePrimarySalary: updatePrimarySalary,
-    updateSecondarySalary: updateSecondarySalary,
+    updateSalary: updateSalary,
+    updateAdditionalIncome: updateAdditionalIncome,
+    updateDeductions: updateDeductions,
     updateFilingStatus: updateFilingStatus,
     updateTaxesOwed: updateTaxesOwed,
-
 }

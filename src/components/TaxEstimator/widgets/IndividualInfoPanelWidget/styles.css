@@ -1,0 +1,11 @@
+.IndividualInfoPanelWidget {
+  background-color: #353535;
+  border: 1px inset #222222;
+  margin: 5px 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  width: 500px;
+  font-size: 15px;
+}
