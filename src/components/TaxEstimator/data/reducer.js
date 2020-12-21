@@ -175,7 +175,7 @@ const calculateTotals = (info) => {
         out.additionalWithholdings = out.additionalWithholdings + val.additionalWithholdings
         out.taxesOwed = out.taxesOwed + val.taxesOwed
     })
-    out.taxReturn = out.taxesOwed - (out.withholdings*12) - out.additionalWithholdings
+    out.taxReturn = (out.withholdings*12) + out.additionalWithholdings - out.taxesOwed
     return out
 }
 
