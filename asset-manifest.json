@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/FinancialAssistant/static/css/main.63e2e7a6.chunk.css",
-    "main.js": "/FinancialAssistant/static/js/main.8abc1337.chunk.js",
-    "main.js.map": "/FinancialAssistant/static/js/main.8abc1337.chunk.js.map",
+    "main.js": "/FinancialAssistant/static/js/main.ec3c9368.chunk.js",
+    "main.js.map": "/FinancialAssistant/static/js/main.ec3c9368.chunk.js.map",
     "runtime-main.js": "/FinancialAssistant/static/js/runtime-main.3dfe4def.js",
     "runtime-main.js.map": "/FinancialAssistant/static/js/runtime-main.3dfe4def.js.map",
     "static/css/2.e6ac38db.chunk.css": "/FinancialAssistant/static/css/2.e6ac38db.chunk.css",
     "static/js/2.1086b167.chunk.js": "/FinancialAssistant/static/js/2.1086b167.chunk.js",
     "static/js/2.1086b167.chunk.js.map": "/FinancialAssistant/static/js/2.1086b167.chunk.js.map",
     "index.html": "/FinancialAssistant/index.html",
-    "precache-manifest.45d0b5fcb5fa2687d9872cee31d41938.js": "/FinancialAssistant/precache-manifest.45d0b5fcb5fa2687d9872cee31d41938.js",
+    "precache-manifest.92f3c52ad322e3fd0c718a9ed073dc87.js": "/FinancialAssistant/precache-manifest.92f3c52ad322e3fd0c718a9ed073dc87.js",
     "service-worker.js": "/FinancialAssistant/service-worker.js",
     "static/css/2.e6ac38db.chunk.css.map": "/FinancialAssistant/static/css/2.e6ac38db.chunk.css.map",
     "static/css/main.63e2e7a6.chunk.css.map": "/FinancialAssistant/static/css/main.63e2e7a6.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.e6ac38db.chunk.css",
     "static/js/2.1086b167.chunk.js",
     "static/css/main.63e2e7a6.chunk.css",
-    "static/js/main.8abc1337.chunk.js"
+    "static/js/main.ec3c9368.chunk.js"
   ]
 }
