@@ -11,14 +11,17 @@ class SalaryInfoWidget extends Component {
     salaryChanged = event => {
       this.props.updateSalary(parseInt(this.props.index), event.target.value)
       this.props.updateTaxesOwed()
+      this.props.updateTaxReturn()
     }
     additionalIncomeChanged = event => {
       this.props.updateAdditionalIncome(parseInt(this.props.index), event.target.value)
       this.props.updateTaxesOwed()
+      this.props.updateTaxReturn()
     }
     filingStatusChanged = event => {
       this.props.updateFilingStatus(event.target.value, parseInt(this.props.index))
       this.props.updateTaxesOwed()
+      this.props.updateTaxReturn()
     }
     selectText = event => {
       event.target.select()
@@ -27,7 +30,7 @@ class SalaryInfoWidget extends Component {
   render() {
     return (
       <div className="SalaryInfoWidget">
-        <h2>Income</h2>
+        <h2>Income #{parseInt(this.props.index) + 1}</h2>
         <label>Salary</label>
         <span className="currency-input-format">
           $
@@ -37,7 +40,7 @@ class SalaryInfoWidget extends Component {
             name="mortgage-duration" 
             step="5" 
             min="0" 
-            value={this.props.taxInfo.salaries[this.props.index]}
+            value={this.props.taxInfo.info[this.props.index].salary}
             onChange={this.salaryChanged}
             onFocus = {this.selectText}
           />
@@ -51,7 +54,7 @@ class SalaryInfoWidget extends Component {
             name="mortgage-duration" 
             step="5" 
             min="0" 
-            value={this.props.taxInfo.additionalIncome[this.props.index]}
+            value={this.props.taxInfo.info[this.props.index].additionalIncome}
             onChange={this.additionalIncomeChanged}
             onFocus = {this.selectText}
           />
@@ -60,7 +63,7 @@ class SalaryInfoWidget extends Component {
         <span className="input-format">
           <select
             name="status" 
-            value = {this.props.taxInfo.filingStatus[this.props.index].Status}          
+            value = {this.props.taxInfo.info[this.props.index].filingStatus.Status}          
             onChange={this.filingStatusChanged}>
             <option value={FEDERAL_TAX_FILING_STATUSES.Single}>Single</option>
             <option value={FEDERAL_TAX_FILING_STATUSES.HeadOfHousehold}>Head Of Household</option>
@@ -84,7 +87,7 @@ const mapDispatchToProps = (dispatch) =>{
     updateAdditionalIncome: (index, value) => {dispatch(taxActions.updateAdditionalIncome(index, value))},
     updateFilingStatus: (index, value) => {dispatch(taxActions.updateFilingStatus(index, value))},
     updateTaxesOwed: () => {dispatch(taxActions.updateTaxesOwed())},
-
+    updateTaxReturn: () => {dispatch(taxActions.updateTaxReturn())},
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SalaryInfoWidget);

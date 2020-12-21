@@ -1,0 +1,36 @@
+.TotalTaxInfoWidget {
+  background-color: #555;
+  color: #eee;
+  border: 1px inset #666;
+  padding: 5px 20px 20px;
+  margin: 5px 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  min-width: 80vw;
+  font-size: 15px;
+}
+.TaxBreakdown {
+  background-color: #555;
+  color: #eee;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  min-width: 80vw;
+  font-size: 15px;
+}
+.TotalTaxesOwed {
+  background-color: #555;
+  color: #eee;
+  border: 1px inset #666;
+  padding: 5px 20px 20px;
+  margin: 5px 5px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  font-size: 15px;
+  width: 350px;
+}

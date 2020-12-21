@@ -9,13 +9,13 @@ class AboveTheLineDeductionWidget extends Component {
         this.props.updateTaxesOwed()
     }
     deductionChanged = (value, type) => {
-      console.log(value)
       if(value === "")
       {
         value = 0
       }
       this.props.updateDeductions(parseInt(this.props.index), parseFloat(value), type)
       this.props.updateTaxesOwed()
+      this.props.updateTaxReturn()
     }
     retirementDeductionChanged = event => {
         this.deductionChanged(event.target.value, taxDeductionTypes.RETIREMENT)
@@ -42,7 +42,7 @@ class AboveTheLineDeductionWidget extends Component {
       return (
       <div className="AboveTheLineDeductionWidget">
         <h2>Above The Line Deductions</h2>
-        <label htmlFor="monthly-payment">IRA/401K Contribution</label>
+        <label htmlFor="monthly-payment">IRA/401K Contribution (Annual)</label>
         <span className="currency-input-format">
           $
           <input
@@ -51,7 +51,7 @@ class AboveTheLineDeductionWidget extends Component {
             name="mortgage-duration" 
             step="5" 
             min="0" 
-            value={this.props.taxInfo.deductions[this.props.index].retirement}
+            value={this.props.taxInfo.info[this.props.index].deductions.retirement}
             onChange={this.retirementDeductionChanged}
             onFocus = {this.selectText}
           />
@@ -65,7 +65,7 @@ class AboveTheLineDeductionWidget extends Component {
             name="mortgage-duration" 
             step="5" 
             min="0" 
-            value={this.props.taxInfo.deductions[this.props.index].studentLoan}
+            value={this.props.taxInfo.info[this.props.index].deductions.studentLoan}
             onChange={this.studentLoanDeductionChanged}
             onFocus = {this.selectText}
 
@@ -80,7 +80,7 @@ class AboveTheLineDeductionWidget extends Component {
             name="mortgage-duration" 
             step="5" 
             min="0" 
-            value={this.props.taxInfo.deductions[this.props.index].movingExpense}
+            value={this.props.taxInfo.info[this.props.index].deductions.movingExpense}
             onChange={this.movingExpenseDeductionChanged}
             onFocus = {this.selectText}
 
@@ -95,7 +95,7 @@ class AboveTheLineDeductionWidget extends Component {
             name="mortgage-duration" 
             step="5" 
             min="0" 
-            value={this.props.taxInfo.deductions[this.props.index].educatorExpense}
+            value={this.props.taxInfo.info[this.props.index].deductions.educatorExpense}
             onChange={this.educatorExpenseDeductionChanged}
             onFocus = {this.selectText}
           />
@@ -109,7 +109,7 @@ class AboveTheLineDeductionWidget extends Component {
             name="mortgage-duration" 
             step="5" 
             min="0" 
-            value={this.props.taxInfo.deductions[this.props.index].hsa}
+            value={this.props.taxInfo.info[this.props.index].deductions.hsa}
             onChange={this.hsaDeductionChanged}
             onFocus = {this.selectText}
           />
@@ -123,7 +123,7 @@ class AboveTheLineDeductionWidget extends Component {
             name="mortgage-duration" 
             step="5" 
             min="0" 
-            value={this.props.taxInfo.deductions[this.props.index].other}
+            value={this.props.taxInfo.info[this.props.index].deductions.other}
             onChange={this.otherDeductionsChanged}
             onFocus = {this.selectText}
           />
@@ -141,11 +141,9 @@ const mapStateToProps = (state) =>{
 }
 const mapDispatchToProps = (dispatch) =>{
   return{
-    updateSalary: (index, value) => {dispatch(taxActions.updateSalary(index, value))},
     updateDeductions: (index, value, type) => {dispatch(taxActions.updateDeductions(index, value, type))},
-    updateFilingStatus: (value) => {dispatch(taxActions.updateFilingStatus(value))},
     updateTaxesOwed: () => {dispatch(taxActions.updateTaxesOwed())},
-
+    updateTaxReturn: () => {dispatch(taxActions.updateTaxReturn())},
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AboveTheLineDeductionWidget);

@@ -32,16 +32,18 @@ export const FEDERAL_TAX_INFORMATION = {
     }
 }
 
-
 export const TaxConstants = {
     UPDATE_SALARIES: 'TAXES_UPDATE_SALARY_VALUE',
     UPDATE_ADDITIONAL_INCOME: 'TAXES_UPDATE_ADDITIONAL_INCOME_VALUE',
-    UPDATE_IRA_CONTRIBUTIONS: 'TAXES_UPDATE_IRA_CONTRIBUTION_VALUE',
     UPDATE_DEDUCTIONS: 'TAXES_UPDATE_DEDUCTIONS_VALUE',
     UPDATE_SECONDARY_SALARY: 'TAXES_UPDATE_SECONDARY_SALARY_VALUE',
     UPDATE_FILING_STATUS: 'TAXES_UPDATE_FILING_STATUS',
-    UPDATE_TAXES_OWED: 'TAXES_UPDATE_TAXES_OWED'
+    UPDATE_TAXES_OWED: 'TAXES_UPDATE_TAXES_OWED',
+    UPDATE_WITHOLDINGS: 'TAXES_UPDATE_WITHHOLDINGS',
+    UPDATE_ADDITIONAL_WITHOLDINGS: "TAXES_UPDATE_ADDITIONAL_WITHHOLDINGS",
+    UPDATE_TAX_RETURN: 'TAXES_UPDATE_TAX_RETURN'
 }
+
 export const taxDeductionTypes = {
     RETIREMENT: "retirement",
     STUDENT_LOAN: "studentLoan",
@@ -91,9 +93,36 @@ function updateFilingStatus(value, index){
         }
     }
 }
+
 function updateTaxesOwed(){
     return{
         type: TaxConstants.UPDATE_TAXES_OWED
+    }
+}
+
+function updateWithholdings(index, value){
+    return{
+        type: TaxConstants.UPDATE_WITHOLDINGS,
+        payload: {
+            value: value,            
+            index: index,
+        }
+    }
+}
+
+function updateAdditionalWithholdings(index, value){
+    return{
+        type: TaxConstants.UPDATE_ADDITIONAL_WITHOLDINGS,
+        payload: {
+            value: value,            
+            index: index,
+        }
+    }
+}
+
+function updateTaxReturn(){
+    return{
+        type: TaxConstants.UPDATE_TAX_RETURN
     }
 }
 
@@ -104,4 +133,7 @@ export const taxActions =
     updateDeductions: updateDeductions,
     updateFilingStatus: updateFilingStatus,
     updateTaxesOwed: updateTaxesOwed,
+    updateWithholdings: updateWithholdings,
+    updateAdditionalWithholdings: updateAdditionalWithholdings,
+    updateTaxReturn: updateTaxReturn
 }
