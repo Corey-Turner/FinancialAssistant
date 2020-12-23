@@ -1,0 +1,469 @@
+import { BUDGET_CATEGORY_FIELDS } from '../data/constants';
+import {addBudgetCategory, removeBudgetCategory, updateBudgetCategory} from './../data/budgetManagerPrivateAPI'
+
+//  ***********************************
+///
+///         Utilities
+///
+//  ***********************************
+const ITEMS_TO_ADD_FOR_ID_CHECKING = 10;
+
+const STARTING_LIST = [
+    {
+        id:'123456',
+        name: 'Existing Category 1',
+        description: 'Existing Description 1',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+    },
+    {
+        id: '1234567',
+        name: 'Existing Category 2',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    },
+    {
+        id: '12345678',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    }
+];
+
+const CheckIfCategoriesAreEqual = (a,b) => {
+    expect(a.length).toEqual(b.length)
+    a.map((item, index) => {
+        for(const [key, value] of Object.entries(item)) {
+            if('id' === key) {
+                continue;
+            }
+            expect(a[index][key]).toEqual(b[index][key])
+        }
+    })
+}
+
+//  ***********************************
+///
+///     addBudgetCategoryTests
+///
+//  ***********************************
+
+test("should successfully add a new category to an empty category list", () => {
+    
+    const expectedResult = [{
+        id: '123456',
+        name: 'NewCategory 1',
+        description: '',
+        budgetedAmount: 0,
+        incomeSource: false,
+        color: '#808080',
+    }];
+
+    // Starts from an empty list
+    const result = addBudgetCategory([]);
+    CheckIfCategoriesAreEqual(result, expectedResult)
+})
+
+test("should successfully add a new category to a populated category list", () => {
+    
+    const expectedResult = [
+        {
+        id:'123456',
+        name: 'Existing Category 1',
+        description: 'Existing Description 1',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+    },
+    {
+        id: '1234567',
+        name: 'Existing Category 2',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    },
+    {
+        id: '12345678',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    },
+    {
+        id: '',
+        name: 'NewCategory 4',
+        description: '',
+        budgetedAmount: 0,
+        incomeSource: false,
+        color: '#808080',
+    },
+    ];
+
+    const result = addBudgetCategory(STARTING_LIST);
+    
+    CheckIfCategoriesAreEqual(result, expectedResult)
+})
+
+test("should never repeat IDs when adding items to the category list", () => {
+    var i;
+    var result = []
+    var idList = []
+    var idRepeated = false;
+
+    for (i = 0; i < ITEMS_TO_ADD_FOR_ID_CHECKING; i++)  {
+        result = addBudgetCategory([]);
+    }
+
+    result.forEach(category => {
+        var retValue = true;
+        idList.forEach(id => {
+            if(category.id == id){
+                retValue = false;
+                return;
+            }
+        })
+        if(!retValue){
+            idRepeated = true;
+            return;
+        }
+        else{
+            idList.push(category.id)
+        }
+    })
+    expect(idRepeated).toEqual(false)
+})
+
+//  ***********************************
+///
+///     removeBudgetCategory
+///
+//  ***********************************
+test("Should successfully remove a category from a populated category list", () => {
+    const expectedResult = [
+        {
+            id:'123456',
+            name: 'Existing Category 1',
+            description: 'Existing Description 1',
+            budgetedAmount: 999.99,
+            incomeSource: false,
+            color: '#111111',
+        },
+        {
+            id: '12345678',
+            name: 'Existing Category 3',
+            description: 'Existing Description 3',
+            budgetedAmount: 777.77,
+            incomeSource: false,
+            color: '#808080',
+        }
+    ];
+
+    const result = removeBudgetCategory(STARTING_LIST, '1234567');
+    CheckIfCategoriesAreEqual(result, expectedResult);
+})
+
+test("Should successfully remove last category from a populated category list", () => {
+    const expectedResult = [
+        {
+            id: '123456',
+            name: 'Existing Category 1',
+            description: 'Existing Description 1',
+            budgetedAmount: 999.99,
+            incomeSource: false,
+            color: '#111111',
+        },
+        {
+            id: '1234567',
+            name: 'Existing Category 2',
+            description: 'Existing Description 2',
+            budgetedAmount: 777.77,
+            incomeSource: false,
+            color: '#808080',
+        },
+    ];
+
+    const result = removeBudgetCategory(STARTING_LIST, '12345678');
+    CheckIfCategoriesAreEqual(result, expectedResult);
+})
+
+test("Should successfully remove first category from a populated category list", () => {
+    const expectedResult = [
+        {
+            id: '1234567',
+            name: 'Existing Category 2',
+            description: 'Existing Description 2',
+            budgetedAmount: 777.77,
+            incomeSource: false,
+            color: '#808080',
+        },
+        {
+            id: '12345678',
+            name: 'Existing Category 3',
+            description: 'Existing Description 3',
+            budgetedAmount: 777.77,
+            incomeSource: false,
+            color: '#808080',
+        }
+    ];
+    const startingList = [
+        {
+            id:'123456',
+            name: 'Existing Category 1',
+            description: 'Existing Description 1',
+            budgetedAmount: 999.99,
+            incomeSource: false,
+            color: '#111111',
+        },
+        {
+            id: '1234567',
+            name: 'Existing Category 2',
+            description: 'Existing Description 2',
+            budgetedAmount: 777.77,
+            incomeSource: false,
+            color: '#808080',
+        },
+        {
+            id: '12345678',
+            name: 'Existing Category 3',
+            description: 'Existing Description 3',
+            budgetedAmount: 777.77,
+            incomeSource: false,
+            color: '#808080',
+        }
+    ];
+    const result = removeBudgetCategory(startingList, '123456');
+    CheckIfCategoriesAreEqual(result, expectedResult);
+})
+
+test("should not update list if id cannot be found when removing a category", () => {
+    const expectedResult = [
+        {
+            id:'123456',
+            name: 'Existing Category 1',
+            description: 'Existing Description 1',
+            budgetedAmount: 999.99,
+            incomeSource: false,
+            color: '#111111',
+        },
+        {
+            id: '1234567',
+            name: 'Existing Category 2',
+            description: 'Existing Description 2',
+            budgetedAmount: 777.77,
+            incomeSource: false,
+            color: '#808080',
+        },
+        {
+            id: '12345678',
+            name: 'Existing Category 3',
+            description: 'Existing Description 3',
+            budgetedAmount: 777.77,
+            incomeSource: false,
+            color: '#808080',
+        }
+    ];
+   
+    const result = removeBudgetCategory(STARTING_LIST, '12345');
+    CheckIfCategoriesAreEqual(result, expectedResult);
+})
+
+//  ***********************************
+///
+///     updateBudgetCategory
+///
+//  ***********************************
+
+test("should successfully update the name category", () => {
+     const expectedResult = [
+    {
+        id:'123456',
+        name: 'Existing Category 1',
+        description: 'Existing Description 1',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+    },
+    {
+        id: '1234567',
+        name: 'New Name',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    },
+    {
+        id: '12345678',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    }
+];
+
+    const result = updateBudgetCategory(STARTING_LIST, '1234567', BUDGET_CATEGORY_FIELDS.Name, "New Name")
+    CheckIfCategoriesAreEqual(result, expectedResult)
+
+})
+
+test("should successfully update the description category", () => {
+    const expectedResult = [
+    {
+        id:'123456',
+        name: 'Existing Category 1',
+        description: 'New Description',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+    },
+    {
+        id: '1234567',
+        name: 'Existing Category 2',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    },
+    {
+        id: '12345678',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    }];
+
+    const result = updateBudgetCategory(STARTING_LIST, '123456', BUDGET_CATEGORY_FIELDS.Description, "New Description")
+    CheckIfCategoriesAreEqual(result, expectedResult)
+})
+
+test("should successfully update the budgetedAmount category", () => {
+    const expectedResult = [
+    {
+        id:'123456',
+        name: 'Existing Category 1',
+        description: 'Existing Description 1',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+    },
+    {
+        id: '1234567',
+        name: 'Existing Category 2',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    },
+    {
+        id: '12345678',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 20.59,
+        incomeSource: false,
+        color: '#808080',
+    }];
+
+    const result = updateBudgetCategory(STARTING_LIST, '12345678', BUDGET_CATEGORY_FIELDS.BudgetedAmount, 20.59)
+    CheckIfCategoriesAreEqual(result, expectedResult)
+})
+
+test("should successfully update the IncomeSource category", () => {
+    const expectedResult = [
+    {
+        id:'123456',
+        name: 'Existing Category 1',
+        description: 'Existing Description 1',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+    },
+    {
+        id: '1234567',
+        name: 'Existing Category 2',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: true,
+        color: '#808080',
+    },
+    {
+        id: '12345678',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    }];
+
+    const result = updateBudgetCategory(STARTING_LIST, '1234567', BUDGET_CATEGORY_FIELDS.IncomeSource, true)
+    CheckIfCategoriesAreEqual(result, expectedResult)
+})
+
+test("should successfully update the Color category", () => {
+    const expectedResult = [
+    {
+        id:'123456',
+        name: 'Existing Category 1',
+        description: 'Existing Description 1',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+    },
+    {
+        id: '1234567',
+        name: 'Existing Category 2',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#123456',
+    },
+    {
+        id: '12345678',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    }];
+
+    const result = updateBudgetCategory(STARTING_LIST, '1234567', BUDGET_CATEGORY_FIELDS.Color, "#123456")
+    CheckIfCategoriesAreEqual(result, expectedResult)
+})
+
+test("Should fail to update a budget category when given a bad ID", () => {
+    const expectedResult = [
+    {
+        id:'123456',
+        name: 'Existing Category 1',
+        description: 'Existing Description 1',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+    },
+    {
+        id: '1234567',
+        name: 'Existing Category 2',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    },
+    {
+        id: '12345678',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+    }];
+
+    const result = updateBudgetCategory(STARTING_LIST, '1234', BUDGET_CATEGORY_FIELDS.Name, "New Name")
+    CheckIfCategoriesAreEqual(result, expectedResult)
+})

@@ -1,0 +1,548 @@
+import { EXPENSE_FIELDS, DEFAULT_VALUES } from '../data/constants';
+import {addItemToExpenseList, removeItemFromExpenseList, updateExpenseItem, setListOfExpensesToUncategorized} from './../data/budgetManagerPrivateAPI'
+
+//  ***********************************
+///
+///         Utilities
+///
+//  ***********************************
+const ITEMS_TO_ADD_FOR_ID_CHECKING = 10;
+
+/*TODO update the date field to be the correct DateTime Format*/
+const STARTING_LIST = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    },
+];
+
+const CheckIfExpensesAreEqual = (a,b) => {
+    expect(a.length).toEqual(b.length)
+    a.map((item, index) => {
+        for(const [key, value] of Object.entries(item)) {
+            if('id' === key) {
+                continue;
+            }
+            expect(a[index][key]).toEqual(b[index][key]);
+        }
+    })
+}
+
+//  ***********************************
+///
+///     addItemToExpenseList
+///
+//  ***********************************
+test("should successfully add a new expense to an empty expense list", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'New Name',
+        date: '05/22/2021',
+        amount: 50.25,
+        category: '1234'
+    }];
+    const result = addItemToExpenseList([], 'New Name', '05/22/2021', 50.25, '1234');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+/* TODO This test needs to be written in such a way that a dates default TODAY */
+test("should provide default values for all fields that are not specified", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    },
+    {
+        id: '123456',
+        name: DEFAULT_VALUES.NEW_EXPENSE,
+        date: '',
+        amount: 0,
+        category: DEFAULT_VALUES.NO_CATEGORY
+    }
+];
+    const result = addItemToExpenseList(STARTING_LIST, undefined, undefined, undefined, undefined);
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("should successfully add a new expense to a populated expense list", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    },
+    {
+        id: '123456',
+        name: 'New Name',
+        date: '05/22/2021',
+        amount: 50.25,
+        category: '1234'
+    }
+];
+    const result = addItemToExpenseList(STARTING_LIST, 'New Name', '05/22/2021', 50.25, '1234');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("should never repeat IDs when adding items to the expense list", () => {
+    var i;
+    var result = []
+    var idList = []
+    var idRepeated = false;
+
+    for (i = 0; i < ITEMS_TO_ADD_FOR_ID_CHECKING; i++)  {
+        result = addItemToExpenseList([]);
+    }
+
+    result.forEach(expense => {
+        var retValue = true;
+        console.log(idList)
+        idList.forEach(id => {
+            if(expense.id == id){
+                retValue = false;
+                return;
+            }
+        })
+        if(!retValue){
+            idRepeated = true;
+            return;
+        }
+        else{
+            idList.push(expense.id)
+        }
+    })
+    expect(idRepeated).toEqual(false)
+})
+
+//  ***********************************
+///
+///     removeItemFromExpenseList
+///
+//  ***********************************
+test("Should successfully remove an expense from a populated expense list", () => {
+    const expectedResult = [
+        {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    },
+    ];
+    const result = removeItemFromExpenseList(STARTING_LIST,'1234');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("Should successfully remove last expense from a populated expense list", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    }
+    ];
+    const result = removeItemFromExpenseList(STARTING_LIST,'12345');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("Should successfully remove first expense from a populated expense list", () => {
+    const expectedResult = [
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    },
+    ];
+    const result = removeItemFromExpenseList(STARTING_LIST,'123');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("should not update list if id cannot be found when removing a expense", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    },
+    ];
+    const result = removeItemFromExpenseList(STARTING_LIST,'123456');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+//  ***********************************
+///
+///     updateExpenseItem
+///
+//  ***********************************
+test("should successfully update the name expense", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'New Name',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    }];
+    const result = updateExpenseItem(STARTING_LIST, "123" ,EXPENSE_FIELDS.Name, 'New Name');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("should successfully update the date expense", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '01/21/2021',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    }];
+    const result = updateExpenseItem(STARTING_LIST, "1234", EXPENSE_FIELDS.Date, '01/21/2021');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("should successfully update the amount expense", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 34.57,
+        category: '12345'
+    }];
+    const result = updateExpenseItem(STARTING_LIST, "12345", EXPENSE_FIELDS.Amount, 34.57);
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("should successfully update the category expense", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '12345'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    }];
+    const result = updateExpenseItem(STARTING_LIST, "123", EXPENSE_FIELDS.Category, '12345');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("Should fail to update an expenses field when given a bad ID", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    }];
+    const result = updateExpenseItem(STARTING_LIST, "123456", EXPENSE_FIELDS.Name, 'New Name');
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("should update to default values if no value is given for Name", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: DEFAULT_VALUES.NEW_EXPENSE,
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    }];
+    const result = updateExpenseItem(STARTING_LIST, "123" ,EXPENSE_FIELDS.Name, undefined);
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+/* TODO This test needs to be written in such a way that a dates default TODAY */
+
+test("should update to default values if no value is given for Date", () => {
+
+})
+
+test("should update to default values if no value is given for amount", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 0,
+        category: '12345'
+    }];
+    const result = updateExpenseItem(STARTING_LIST, "12345", EXPENSE_FIELDS.Amount, undefined);
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+test("should update to default values if no value is given for category", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '123'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: DEFAULT_VALUES.NO_CATEGORY
+    }];
+    const result = updateExpenseItem(STARTING_LIST, "12345", EXPENSE_FIELDS.Category, undefined);
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+//  ***********************************
+///
+///     setListOfExpensesToUncategorized
+///
+//  ***********************************
+test("should successfuly update the category of all specified items to uncategorized", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: DEFAULT_VALUES.NO_CATEGORY
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: DEFAULT_VALUES.NO_CATEGORY
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '12345'
+    }];
+    const listToUpdate = ['123', '1234']
+    const result = setListOfExpensesToUncategorized(STARTING_LIST, listToUpdate);
+    CheckIfExpensesAreEqual(result, expectedResult);
+})
+
+
+test("only valid ids should be updated", () => {
+    const expectedResult = [
+    {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: DEFAULT_VALUES.NO_CATEGORY
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '1234'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: DEFAULT_VALUES.NO_CATEGORY
+    }];
+    const listToUpdate = ['123', '12345', '123456']
+    const result = setListOfExpensesToUncategorized(STARTING_LIST, listToUpdate);
+    CheckIfExpensesAreEqual(result, expectedResult);
+})

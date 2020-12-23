@@ -1,0 +1,115 @@
+import {RetrieveExpensesFromCategory, RetrieveExpenseCategoryIDFromExpense, RetrieveIndexFromListOfItems} from './../data/budgetManagerPrivateAPI'
+
+//  ***********************************
+///
+///         Utilities
+///
+//  ***********************************
+const CheckIfCategoryExpensesAreEqual = (a,b) => {
+    expect(a.length).toEqual(b.length)
+    a.map((item, index) => {
+        expect(item).toEqual(b[index])
+    })
+}
+
+const CATEGORY_LIST = [
+    {
+        id:'123',
+        name: 'Existing Category 1',
+        description: 'Existing Description 1',
+        budgetedAmount: 999.99,
+        incomeSource: false,
+        color: '#111111',
+        expenses: ['123', '123456']
+    },
+    {
+        id: '1234',
+        name: 'Existing Category 2',
+        description: 'Existing Description 2',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+        expenses: ['123', '1234', '12345']
+    },
+    {
+        id: '12345',
+        name: 'Existing Category 3',
+        description: 'Existing Description 3',
+        budgetedAmount: 777.77,
+        incomeSource: false,
+        color: '#808080',
+        expenses: []
+    }
+]
+
+const EXPENSES_LIST = [
+     {
+        id:'123',
+        name: 'Existing Expense 1',
+        date: '12/25/2020',
+        amount: 10.25,
+        category: '1234'
+    },
+    {
+        id:'1234',
+        name: 'Existing Expense 2',
+        date: '12/25/2020',
+        amount: 100.14,
+        category: '12345'
+    },
+    {
+        id:'12345',
+        name: 'Existing Expense 3',
+        date: '12/25/2020',
+        amount: 35.00,
+        category: '123'
+    },
+    ,
+    {
+        id:'123456',
+        name: 'Existing Expense 4',
+        date: '04/23/2021',
+        amount: 27.25,
+        category: '123'
+    },
+]
+
+//  ***********************************
+///
+///     RetrieveExpenseCategoryIDFromExpense
+///
+//  ***********************************
+test("Successfully retrieves the Budget Category Id from the Expense list", () => {
+    const expectedResult = '1234'
+    const result = RetrieveExpenseCategoryIDFromExpense(EXPENSES_LIST, '123')
+    expect(result).toEqual(expectedResult);
+})
+
+test("Fails to retrieve the Budget Category ID if the Expense ID does not exist", () => {
+    const expectedResult = -1
+    const result = RetrieveExpenseCategoryIDFromExpense(EXPENSES_LIST, '1234567')
+    expect(result).toEqual(expectedResult);
+})
+
+//  ***********************************
+///
+///     RetrieveIndexFromListOfItems
+///
+//  ***********************************
+test("Successfully retrieves the index of a Category item if their is an item with a cooresponding ID", () => {
+    const expectedResult = 2;
+    const result = RetrieveIndexFromListOfItems(CATEGORY_LIST, '12345')
+    expect(result).toEqual(expectedResult)
+})
+
+test("Successfully retrieves the index of an Expense item if their is an item with a cooresponding ID", () => {
+    const expectedResult = 1;
+    const result = RetrieveIndexFromListOfItems(EXPENSES_LIST, '1234')
+    expect(result).toEqual(expectedResult)
+})
+
+test("Fails to retrieve the index of an items if their is no item with a cooresponding ID", () => {
+    const expectedResult = -1;
+    const result = RetrieveIndexFromListOfItems(CATEGORY_LIST, '123456')
+    expect(result).toEqual(expectedResult)
+})
